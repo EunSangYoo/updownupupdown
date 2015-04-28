@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" 
+    package="net.pocketmagic.android.mycursoroverlay" 
+    android:versionCode="1" 
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="7" />
+	
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+	<application android:icon="@drawable/ic_launcher" android:label="@string/app_name" android:name=".Singleton">
+        <activity android:name=".GUI" android:label="@string/title_activity_gui" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name="net.pocketmagic.android.mycursoroverlay.SensorService">
+			<intent-filter>
+                <action android:name="net.pocketmagic.android.mycursoroverlay.SensorService" />
+            </intent-filter>
+		</service>
+		
+		<service android:name="net.pocketmagic.android.mycursoroverlay.CursorService">
+            <intent-filter>
+                <action android:name="net.pocketmagic.android.mycursoroverlay.CursorService" />
+            </intent-filter>
+        </service> 
+    </application>
+</manifest>
