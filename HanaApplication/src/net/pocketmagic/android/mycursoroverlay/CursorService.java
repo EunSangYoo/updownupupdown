@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.media.SoundPool;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.Gravity;
@@ -35,7 +36,7 @@ import android.widget.Toast;
  */
 public class CursorService extends Service {
     OverlayView mView;
-
+    
     /**
      * @param x
      * @param y
@@ -61,6 +62,8 @@ public class CursorService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        
+        
         Singleton.getInstance().m_CurService = this;
 
 		Log.d("CursorService", "Service created");
@@ -72,9 +75,7 @@ public class CursorService extends Service {
                 WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,//TYPE_SYSTEM_ALERT,//TYPE_SYSTEM_OVERLAY,
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE |
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,  //will cover status bar as well!!!
-				// WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				// WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN, //will cover status bar as well!!!
                 PixelFormat.TRANSLUCENT);
         params.gravity = Gravity.LEFT | Gravity.TOP;
        	//params.x = 300;
@@ -90,12 +91,15 @@ public class CursorService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
+	    
         Log.d("CursorService", "Service destroyed");
         Singleton.getInstance().m_CurService = null;
         if(mView != null) {
             ((WindowManager) getSystemService(WINDOW_SERVICE)).removeView(mView);
             mView = null;
         }
+        
+
     }
 }
 

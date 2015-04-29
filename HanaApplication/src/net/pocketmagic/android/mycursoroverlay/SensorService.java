@@ -1,6 +1,10 @@
 package net.pocketmagic.android.mycursoroverlay;
 
+import java.util.List;
+
+import android.app.ActivityManager;
 import android.app.Service;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.hardware.Sensor;
@@ -12,6 +16,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 public class SensorService extends Service{
+	static { System.loadLibrary("hana"); }
+	
 	boolean m_bRunning = false;
 	int accelXValue;
 	int accelYValue;
@@ -29,6 +35,7 @@ public class SensorService extends Service{
 		return null;
 	}
 	public void onStart(Intent intent, int startId) {
+		 
 		mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 		accSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		proxSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT); 
@@ -70,7 +77,7 @@ public class SensorService extends Service{
 						new_x = 1530; new_y = 1930;
 						//int ix = new_x/2, iy = new_y/2;
 						ix = new_x/2;
-						iy = new_y/2+75;
+						iy = new_y/2;
 						while ((ix!=new_x || iy!=new_y) && m_bRunning) {
 							
 							ix -= accelXValue;
@@ -82,7 +89,8 @@ public class SensorService extends Service{
 							// if(iy>1930) iy=1929;
 							if (iy>2200) iy = 2199;
 							
-							Singleton.getInstance().m_CurService.Update(ix, iy, true);
+							if(Singleton.getInstance().m_CurService!=null)
+								Singleton.getInstance().m_CurService.Update(ix, iy, true);
 							try {
 								Thread.sleep(5);
 							} catch (InterruptedException e) {
@@ -97,10 +105,10 @@ public class SensorService extends Service{
 		        }
 		};
 		t.start();
-		
 	}
 	
 	public void onDestroy() {
+
 	}
 	/*
 	public void onSensorChanged(SensorEvent event) {
