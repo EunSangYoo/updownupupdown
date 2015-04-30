@@ -53,7 +53,6 @@ public class BootSvc extends Service implements OnKeyListener{
 
 	@Override
 	public void onCreate(){
-		
 		Toast.makeText(getApplicationContext(), "UpDown ON!", 0).show();
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(Intent.ACTION_MEDIA_BUTTON);
@@ -96,7 +95,6 @@ public class BootSvc extends Service implements OnKeyListener{
 					player.start();
 					
 				    flag = false;
-				    
 				}
 			}
 
